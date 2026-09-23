@@ -1,4 +1,4 @@
-name: Project iteso-devops-lab-05
+name: Project iteso-devops
 
 on:
   push:
