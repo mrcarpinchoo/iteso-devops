@@ -11,6 +11,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import { handleUsers } from './users';
+
 async function queryDatabase(db: D1Database) {
 	// Connect and execute a query
 	const { results } = await db.prepare('SELECT * FROM users').all();
@@ -20,6 +22,11 @@ async function queryDatabase(db: D1Database) {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		const { pathname } = new URL(request.url);
+		if (pathname === '/users' || pathname.startsWith('/users/')) {
+			return handleUsers(request, env.db, pathname);
+		}
+
 		const result = await queryDatabase(env.db);
 
 		return Response.json({ message: 'Hello, world!', result });

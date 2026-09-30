@@ -1,0 +1,5 @@
+-- Migration number: 0001 	 2026-09-30T00:00:00.000Z
+CREATE TABLE IF NOT EXISTS users (
+	id INTEGER PRIMARY KEY,
+	name TEXT NOT NULL
+);

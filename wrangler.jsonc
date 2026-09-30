@@ -4,21 +4,41 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "blue-mud-747e",
+	"name": "blue-mud-747e-dev",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-09-21",
 	"observability": {
 		"enabled": true,
 	},
 	"upload_source_maps": true,
-	"compatibility_flags": ["global_fetch_strictly_public"],
+	"compatibility_flags": [
+		"global_fetch_strictly_public"
+	],
 	"d1_databases": [
 		{
 			"binding": "db",
-			"database_name": "iteso-devops-db",
-			"database_id": "6f2d7539-2a34-44b1-b7ca-1aa8e97e34f9",
+			"database_name": "iteso-devops-db-dev",
+			"database_id": "119b876f-292e-4736-8342-cab5f9721651",
 		},
 	],
+	/**
+	 * The top-level config is development, so a bare `wrangler` command never touches production.
+	 * Bindings are not inherited, so production declares its own D1 database.
+	 * https://developers.cloudflare.com/workers/wrangler/environments/
+	 */
+	"env": {
+		"production": {
+			// Keep the existing production Worker name instead of the default "<name>-production".
+			"name": "blue-mud-747e",
+			"d1_databases": [
+				{
+					"binding": "db",
+					"database_name": "iteso-devops-db",
+					"database_id": "6f2d7539-2a34-44b1-b7ca-1aa8e97e34f9",
+				},
+			],
+		},
+	},
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
